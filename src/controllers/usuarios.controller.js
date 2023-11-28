@@ -8,20 +8,22 @@ exports.getAllUser = async(req,res)=>{
             res.status(200).json({
                 estado  : 1,
                 mensaje : "Usuarios encontrados",
-                usuarios: listadoUsuarios
+                usuarios: listadoUsuarios //[]
             });
         }else{
             res.status(404).json({
-                estado:0,
-                mensaje:"Usuarios no encontrados"
+                estado  : 0,
+                mensaje : "Usuarios no encontrados",
+                usuarios: []               //[]
             })
         }
         
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            estado:0,
-            mensaje:"Ocurrio un error desconocido"
+            estado  : 0,
+            mensaje : "Ocurrio un error desconocido",
+            usuarios: [] 
         })
     }
 }
@@ -32,21 +34,23 @@ exports.getUserByEmail = async(req,res)=>{
         const usuario = await Usuarios.findOne({correo:correo}).exec();
         if(usuario){
             res.status(200).json({
-                estado  : 1,
-                mensaje : "Usuario encontrado",
-                usuario : usuario
+                estado   : 1,
+                mensaje  : "Usuario encontrado",
+                usuarios : [usuario] //La solicitud de cambio de respuesta de la API se fue al SPAM
             })
         }else{
             res.status(404).json({
-                estado : 0,
-                mensaje: "Usuario no encontrado"
+                estado   : 0,
+                mensaje  : "Usuario no encontrado",
+                usuarios : []
             })
         }
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            estado:0,
-            mensaje:"Ocurrio un error desconocido"
+            estado   : 0,
+            mensaje  : "Ocurrio un error desconocido",
+            usuarios : []
         })
     }
 }
@@ -133,20 +137,23 @@ exports.deleteUser = async(req,res)=>{
         if(usuario){
             await Usuarios.deleteOne(usuario)
             res.status(200).json({
-                estado:1,
-                mensaje:"Usuario eliminado"
+                estado  : 1,
+                mensaje : "Usuario eliminado",
+                usuarios: []
             })
         }else{
             res.status(404).json({
-                estado:0,
-                mensaje:"Usuario no encontrado"
+                estado  : 0,
+                mensaje : "Usuario no encontrado",
+                usuarios: []
             })
         }
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            estado:0,
-            mensaje:"Ocurrio un error desconocido"
+            estado  : 0,
+            mensaje : "Ocurrio un error desconocido",
+            usuarios: []
         })
     }
 }
