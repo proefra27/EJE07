@@ -61,7 +61,8 @@ exports.addUser = async(req, res)=>{
         if(nombres == undefined || apellidos == undefined || usuario == undefined || correo == undefined || clave == undefined){
            res.status(400).json({
             estado:0,
-            mensaje:"Faltan parametros"
+            mensaje:"Faltan parametros",
+            usuarios: []
            })
            //Falta encriptar la clave
         }else{
@@ -69,7 +70,8 @@ exports.addUser = async(req, res)=>{
             if(usuarioEncontrado){
                 res.status(200).json({
                     estado : 0,
-                    mensaje: "Usuario y/o email ya existen"
+                    mensaje: "Usuario y/o email ya existen",
+                    usuarios: []
                 })
             }else{
                 const NuevoUsuario = await Usuarios.create({nombres, apellidos, usuario, correo, clave})
@@ -77,12 +79,13 @@ exports.addUser = async(req, res)=>{
                     res.status(200).json({
                         estado:1,
                         mensaje:"Usuario creado con éxito",
-                        usuario:NuevoUsuario
+                        usuarios:[NuevoUsuario]
                     })
                 }else{
                     res.status(500).json({
                         estado:0,
-                        mensaje:"Ocurrió un error desconocido"
+                        mensaje:"Ocurrió un error desconocido",
+                        usuarios: []
                     })
                 }
             }
@@ -90,7 +93,8 @@ exports.addUser = async(req, res)=>{
     }catch(error){
         res.status(500).json({
             estado:0,
-            mensaje:"Ocurrió un error desconocido"
+            mensaje:"Ocurrió un error desconocido",
+            usuarios: []
         })
         //Programador
         console.log(error);
@@ -106,7 +110,8 @@ exports.updateUser = async(req,res)=>{
         {
             res.status(400).json({
                 estado:0,
-                mensaje:"Faltan parametros"
+                mensaje:"Faltan parametros",
+                usuarios: []
             })
         }else{
             //Se requiere encriptar la nueva clave
@@ -118,14 +123,16 @@ exports.updateUser = async(req,res)=>{
             )
             res.status(200).json({
                 estado:1,
-                mensaje:"El registro se actualizo correctamente"
+                mensaje:"El registro se actualizo correctamente",
+                usuarios: []
             })
         }    
     } catch (error) {
        console.log(error);
        res.status(500).json({
             estado:0,
-            mensaje:"Ocurrio un error desconocido"
+            mensaje:"Ocurrio un error desconocido",
+            usuarios: []
        })
     }
 }
